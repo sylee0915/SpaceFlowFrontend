@@ -1,12 +1,11 @@
-<script setup>
-
-import TestComponent from "@/views/TestComponent.vue";
-</script>
-
 <template>
-<TestComponent />
+  <router-view />
 </template>
 
-<style scoped>
-
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 </style>
