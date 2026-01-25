@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import StepNavigation from './StepNavigation.vue';
+import StepNavigation from '../common/StepNavigation.vue';
 const emit = defineEmits(['next', 'prev']);
 const code = ref(['', '', '', '', '', '']);
 const steps = ['시작', '단체명 설정', '가입방식 설정', '계정정보 기입', '완료'];

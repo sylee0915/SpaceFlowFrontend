@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import StepNavigation from './StepNavigation.vue';
+import StepNavigation from '../common/StepNavigation.vue';
 
 const emit = defineEmits(['next', 'prev']);
 const domain = ref('');

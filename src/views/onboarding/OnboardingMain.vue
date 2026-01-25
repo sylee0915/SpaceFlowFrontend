@@ -45,12 +45,12 @@ import { ref, computed } from 'vue';
 import { useOnboarding } from '@/composables/useOnboarding';
 import EntryScreen from '@/components/onboarding/EntryScreen.vue';
 import SelectFunction from '@/components/onboarding/SelectFunction.vue';
-import SetGroupName from "@/components/onboarding/SetGroupName.vue";
-import SetJoinMethod from "@/components/onboarding/SetJoinMethod.vue";
-import SetAdminAccount from "@/components/onboarding/SetAdminAccount.vue";
-import VerifyEmail from "@/components/onboarding/VerifyEmail.vue";
-import OnboardingDone from "@/components/onboarding/OnboardingDone.vue";
-import SimpleInputStep from "@/components/onboarding/SimpleInputStep.vue";
+import SetGroupName from "@/components/onboarding/manager/SetGroupName.vue";
+import SetJoinMethod from "@/components/onboarding/manager/SetJoinMethod.vue";
+import SetAdminAccount from "@/components/onboarding/manager/SetAdminAccount.vue";
+import VerifyEmail from "@/components/onboarding/shared/VerifyEmail.vue";
+import OnboardingDone from "@/components/onboarding/shared/OnboardingDone.vue";
+import SimpleInputStep from "@/components/onboarding/common/SimpleInputStep.vue";
 
 const { currentStep, STEPS, selectedJoinMethod, next, prev } = useOnboarding();
 

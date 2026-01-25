@@ -1,5 +1,5 @@
 <script setup>
-import StepNavigation from './StepNavigation.vue';
+import StepNavigation from '../common/StepNavigation.vue';
 
 const props = defineProps(['joinMethod']);
 const emit = defineEmits(['next', 'prev', 'update:joinMethod']);

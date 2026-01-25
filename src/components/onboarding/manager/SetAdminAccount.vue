@@ -1,6 +1,6 @@
 <script setup>
 import { reactive } from 'vue';
-import StepNavigation from './StepNavigation.vue';
+import StepNavigation from '../common/StepNavigation.vue';
 
 const emit = defineEmits(['next', 'prev']);
 const form = reactive({ email: '', password: '', confirmPassword: '' });
