@@ -72,7 +72,7 @@ const logoUrl = 'https://i.ibb.co/KjdC2qnn/KakaoTalk-20260125-164433710.png';
 
 <style scoped>
 .onboarding-layout {
-  background-color: #F4E0D4;
+  background: linear-gradient(135deg, #F4E0D4 0%, #F8EFEA 100%);
   min-height: 100vh;
   width: 100vw;
   position: relative;

@@ -80,18 +80,27 @@ const handleSelect = (type) => {
 }
 
 .selection-card {
-  background-color: rgba(255, 255, 255, 0.3);
-  border: 1.5px solid #1A1A1A;
-  padding: 26px;
-  border-radius: 18px;
-  font-size: 17px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 2px solid rgba(26, 26, 26, 0.1);
+  padding: 30px;
+  border-radius: 20px;
+  font-size: 18px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.selection-card:hover {
+  border-color: rgba(26, 26, 26, 0.3);
+  background-color: rgba(255, 255, 255, 0.8);
+  transform: translateX(4px);
 }
 
 .selection-card.active {
   background-color: #1A1A1A;
   color: #FFFFFF;
+  border-color: #1A1A1A;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 </style>

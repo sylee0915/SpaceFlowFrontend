@@ -73,12 +73,24 @@ const steps = ['시작', '단체명 설정', '가입방식 설정', '계정정�
 
 .name-input {
   width: 100%;
-  background-color: rgba(26, 26, 26, 0.05);
-  border: none;
+  background-color: #FFFFFF;
+  border: 2px solid transparent;
   padding: 24px;
-  border-radius: 20px;
-  font-size: 17px;
+  border-radius: 24px;
+  font-size: 18px;
   text-align: center;
   outline: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  transition: all 0.3s ease;
+}
+
+.name-input:focus {
+  border-color: #1A1A1A;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+
+.name-input::placeholder {
+  color: rgba(26, 26, 26, 0.3);
 }
 </style>

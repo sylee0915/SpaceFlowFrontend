@@ -48,49 +48,61 @@ defineEmits(['next', 'prev']);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 36px;
+  margin-bottom: 40px;
 }
 
 .btn-back {
   background: none;
   border: none;
   font-size: 16px;
-  font-weight: 700;
-  text-decoration: underline;
+  font-weight: 600;
   cursor: pointer;
   color: #1A1A1A;
-  opacity: 0.6;
+  opacity: 0.5;
+  transition: opacity 0.2s;
 }
+
+.btn-back:hover { opacity: 1; text-decoration: underline; }
 
 .btn-next {
   background-color: #1A1A1A;
   color: #FFFFFF;
   border: none;
-  padding: 16px 56px;
-  border-radius: 14px;
+  padding: 18px 64px;
+  border-radius: 16px;
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.btn-next:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
 .btn-next:disabled {
-  background-color: rgba(0, 0, 0, 0.1);
-  color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(26, 26, 26, 0.1);
+  color: rgba(26, 26, 26, 0.3);
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 .progress-bar-container {
   width: 100%;
-  height: 2px;
-  background-color: rgba(26, 26, 26, 0.1);
-  margin-bottom: 20px;
+  height: 4px; /* 가독성을 위해 살짝 두껍게 */
+  background-color: rgba(26, 26, 26, 0.05);
+  border-radius: 2px;
+  margin-bottom: 24px;
+  overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
   background-color: #1A1A1A;
-  transition: width 0.4s ease;
+  /* 애니메이션 곡선 최적화 */
+  transition: width 0.8s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 .step-labels {
@@ -102,6 +114,7 @@ defineEmits(['next', 'prev']);
   font-size: 13px;
   font-weight: 500;
   color: rgba(26, 26, 26, 0.3);
+  transition: color 0.3s;
 }
 
 .step-label-item.active {
