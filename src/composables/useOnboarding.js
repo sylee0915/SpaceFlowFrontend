@@ -5,36 +5,48 @@ export function useOnboarding() {
         ENTRY: 'entry',
         SELECT: 'select',
         GROUP_NAME: 'group_name',
-        JOIN_METHOD: 'join_method'
+        JOIN_METHOD: 'join_method',
+        SET_DOMAIN: 'set_domain',
+        SET_ADMIN: 'set_admin',
+        VERIFY_EMAIL: 'verify_email',
+        SET_USER_NAME: 'set_user_name',
+        DONE: 'done'
     };
 
-    const stepOrder = [STEPS.ENTRY, STEPS.SELECT, STEPS.GROUP_NAME, STEPS.JOIN_METHOD];
     const currentStep = ref(STEPS.ENTRY);
+    const selectedJoinMethod = ref('auto');
 
     const next = () => {
-        const currentIndex = stepOrder.indexOf(currentStep.value);
-        if (currentIndex < stepOrder.length - 1) {
-            currentStep.value = stepOrder[currentIndex + 1];
+        const s = STEPS;
+        const cur = currentStep.value;
+
+        if (cur === s.ENTRY) currentStep.value = s.SELECT;
+        else if (cur === s.SELECT) currentStep.value = s.GROUP_NAME;
+        else if (cur === s.GROUP_NAME) currentStep.value = s.JOIN_METHOD;
+        else if (cur === s.JOIN_METHOD) {
+            currentStep.value = selectedJoinMethod.value === 'auto' ? s.SET_DOMAIN : s.SET_ADMIN;
         }
+        else if (cur === s.SET_DOMAIN) currentStep.value = s.SET_ADMIN;
+        else if (cur === s.SET_ADMIN) currentStep.value = s.VERIFY_EMAIL;
+        else if (cur === s.VERIFY_EMAIL) currentStep.value = s.SET_USER_NAME;
+        else if (cur === s.SET_USER_NAME) currentStep.value = s.DONE;
     };
 
     const prev = () => {
-        const currentIndex = stepOrder.indexOf(currentStep.value);
-        if (currentIndex > 0) {
-            currentStep.value = stepOrder[currentIndex - 1];
+        const s = STEPS;
+        const cur = currentStep.value;
+
+        if (cur === s.DONE) currentStep.value = s.SET_USER_NAME;
+        else if (cur === s.SET_USER_NAME) currentStep.value = s.VERIFY_EMAIL;
+        else if (cur === s.VERIFY_EMAIL) currentStep.value = s.SET_ADMIN;
+        else if (cur === s.SET_ADMIN) {
+            currentStep.value = selectedJoinMethod.value === 'auto' ? s.SET_DOMAIN : s.JOIN_METHOD;
         }
+        else if (cur === s.SET_DOMAIN) currentStep.value = s.JOIN_METHOD;
+        else if (cur === s.JOIN_METHOD) currentStep.value = s.GROUP_NAME;
+        else if (cur === s.GROUP_NAME) currentStep.value = s.SELECT;
+        else if (cur === s.SELECT) currentStep.value = s.ENTRY;
     };
 
-    const progress = computed(() => {
-        const index = stepOrder.indexOf(currentStep.value);
-        return (index / (stepOrder.length - 1)) * 100;
-    });
-
-    return {
-        currentStep,
-        STEPS,
-        next,
-        prev,
-        progress
-    };
+    return { currentStep, STEPS, selectedJoinMethod, next, prev };
 }

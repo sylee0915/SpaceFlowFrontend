@@ -1,13 +1,12 @@
 <script setup>
-import { ref } from 'vue';
 import StepNavigation from './StepNavigation.vue';
 
-const emit = defineEmits(['next', 'prev']);
-const selectedMethod = ref('auto');
+const props = defineProps(['joinMethod']);
+const emit = defineEmits(['next', 'prev', 'update:joinMethod']);
 const steps = ['시작', '단체명 설정', '가입방식 설정', '계정정보 기입', '완료'];
 
 const handleSelect = (method) => {
-  selectedMethod.value = method;
+  emit('update:joinMethod', method);
 };
 </script>
 
@@ -20,7 +19,7 @@ const handleSelect = (method) => {
         <div class="method-group">
           <div
               class="method-card"
-              :class="{ active: selectedMethod === 'auto' }"
+              :class="{ active: joinMethod === 'auto' }"
               @click="handleSelect('auto')"
           >
             <div class="card-tab">도메인 자동 승인</div>
@@ -31,7 +30,7 @@ const handleSelect = (method) => {
 
           <div
               class="method-card"
-              :class="{ active: selectedMethod === 'manual' }"
+              :class="{ active: joinMethod === 'manual' }"
               @click="handleSelect('manual')"
           >
             <div class="card-tab">관리자 직접 승인</div>
@@ -123,6 +122,7 @@ const handleSelect = (method) => {
   transition: all 0.25s;
 }
 
+/* 활성화 상태 스타일 */
 .method-card.active .card-tab {
   background-color: #1A1A1A;
 }
