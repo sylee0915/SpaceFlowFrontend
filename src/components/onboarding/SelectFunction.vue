@@ -1,11 +1,10 @@
 <script setup>
 import { ref } from 'vue';
+import StepNavigation from './StepNavigation.vue';
 
 const emit = defineEmits(['next', 'prev']);
-
-const steps = ['시작', '단체명 설정', '가입방식 설정', '계정정보 기입', '완료'];
-const currentStep = 0;
 const selectedType = ref('new');
+const steps = ['시작', '단체명 설정', '가입방식 설정', '계정정보 기입', '완료'];
 
 const handleSelect = (type) => {
   selectedType.value = type;
@@ -37,28 +36,13 @@ const handleSelect = (type) => {
       </div>
     </main>
 
-    <footer class="bottom-nav">
-      <div class="nav-top">
-        <button class="btn-back" @click="emit('prev')">뒤로</button>
-        <button class="btn-next" @click="emit('next')">다음</button>
-      </div>
-
-      <div class="progress-section">
-        <div class="progress-bar-container">
-          <div class="progress-fill" :style="{ width: '20%' }"></div>
-        </div>
-        <div class="step-labels">
-          <div
-              v-for="(step, index) in steps"
-              :key="index"
-              class="step-label-item"
-              :class="{ active: index === currentStep }"
-          >
-            {{ step }}
-          </div>
-        </div>
-      </div>
-    </footer>
+    <StepNavigation
+        :progress="20"
+        :currentIdx="0"
+        :labels="steps"
+        @next="emit('next')"
+        @prev="emit('prev')"
+    />
   </div>
 </template>
 
@@ -109,63 +93,5 @@ const handleSelect = (type) => {
 .selection-card.active {
   background-color: #1A1A1A;
   color: #FFFFFF;
-}
-
-.bottom-nav {
-  padding: 0 64px 48px 64px;
-}
-
-.nav-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 36px;
-}
-
-.btn-back {
-  background: none;
-  border: none;
-  font-size: 16px;
-  font-weight: 700;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.btn-next {
-  background-color: #1A1A1A;
-  color: #FFFFFF;
-  border: none;
-  padding: 16px 56px;
-  border-radius: 14px;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.progress-bar-container {
-  width: 100%;
-  height: 2px;
-  background-color: rgba(26, 26, 26, 0.1);
-  margin-bottom: 20px;
-}
-
-.progress-fill {
-  height: 100%;
-  background-color: #1A1A1A;
-}
-
-.step-labels {
-  display: flex;
-  justify-content: space-between;
-}
-
-.step-label-item {
-  font-size: 13px;
-  color: rgba(26, 26, 26, 0.3);
-}
-
-.step-label-item.active {
-  color: #1A1A1A;
-  font-weight: 700;
 }
 </style>
