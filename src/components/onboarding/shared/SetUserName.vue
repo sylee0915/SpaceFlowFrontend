@@ -2,9 +2,14 @@
 import { ref } from 'vue';
 import StepNavigation from '../common/StepNavigation.vue';
 
+const props = defineProps({
+  labels: Array,
+  currentIdx: Number,
+  progress: Number
+});
+
 const emit = defineEmits(['next', 'prev']);
 const userName = ref('');
-const steps = ['시작', '단체명 설정', '가입방식 설정', '계정정보 기입', '완료'];
 </script>
 
 <template>
@@ -25,9 +30,9 @@ const steps = ['시작', '단체명 설정', '가입방식 설정', '계정정�
     </main>
 
     <StepNavigation
-        :progress="95"
-        :currentIdx="3"
-        :labels="steps"
+        :progress="progress"
+        :currentIdx="currentIdx"
+        :labels="labels"
         :disabledNext="!userName"
         @next="emit('next')"
         @prev="emit('prev')"

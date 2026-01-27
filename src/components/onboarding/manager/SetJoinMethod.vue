@@ -1,9 +1,14 @@
 <script setup>
 import StepNavigation from '../common/StepNavigation.vue';
 
-const props = defineProps(['joinMethod']);
+const props = defineProps({
+  joinMethod: String,
+  labels: Array,
+  currentIdx: Number,
+  progress: Number
+});
+
 const emit = defineEmits(['next', 'prev', 'update:joinMethod']);
-const steps = ['시작', '단체명 설정', '가입방식 설정', '계정정보 기입', '완료'];
 
 const handleSelect = (method) => {
   emit('update:joinMethod', method);
@@ -43,9 +48,9 @@ const handleSelect = (method) => {
     </main>
 
     <StepNavigation
-        :progress="60"
-        :currentIdx="2"
-        :labels="steps"
+        :progress="progress"
+        :currentIdx="currentIdx"
+        :labels="labels"
         @next="emit('next')"
         @prev="emit('prev')"
     />

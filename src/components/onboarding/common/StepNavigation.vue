@@ -34,7 +34,10 @@ defineProps({
   progress: Number,
   currentIdx: Number,
   disabledNext: Boolean,
-  labels: Array
+  labels: {
+    type: Array,
+    default: () => []
+  }
 });
 defineEmits(['next', 'prev']);
 </script>
@@ -91,7 +94,7 @@ defineEmits(['next', 'prev']);
 
 .progress-bar-container {
   width: 100%;
-  height: 4px; /* 가독성을 위해 살짝 두껍게 */
+  height: 4px;
   background-color: rgba(26, 26, 26, 0.05);
   border-radius: 2px;
   margin-bottom: 24px;
@@ -101,7 +104,6 @@ defineEmits(['next', 'prev']);
 .progress-fill {
   height: 100%;
   background-color: #1A1A1A;
-  /* 애니메이션 곡선 최적화 */
   transition: width 0.8s cubic-bezier(0.65, 0, 0.35, 1);
 }
 

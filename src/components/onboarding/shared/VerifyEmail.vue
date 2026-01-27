@@ -2,11 +2,15 @@
 import { ref } from 'vue';
 import StepNavigation from '../common/StepNavigation.vue';
 
+const props = defineProps({
+  labels: Array,
+  currentIdx: Number,
+  progress: Number
+});
+
 const emit = defineEmits(['next', 'prev']);
 const code = ref(['', '', '', '', '', '']);
 const inputs = ref([]);
-
-const steps = ['시작', '단체명 설정', '가입방식 설정', '계정정보 기입', '완료'];
 
 const handleInput = (e, index) => {
   const val = e.target.value;
@@ -47,9 +51,9 @@ const isComplete = () => code.value.every(v => v !== '');
     </main>
 
     <StepNavigation
-        :progress="85"
-        :currentIdx="3"
-        :labels="steps"
+        :progress="progress"
+        :currentIdx="currentIdx"
+        :labels="labels"
         :disabledNext="!isComplete()"
         @next="emit('next')"
         @prev="emit('prev')"

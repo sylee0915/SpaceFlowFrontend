@@ -2,9 +2,14 @@
 import { reactive } from 'vue';
 import StepNavigation from '../common/StepNavigation.vue';
 
+const props = defineProps({
+  labels: Array,
+  currentIdx: Number,
+  progress: Number
+});
+
 const emit = defineEmits(['next', 'prev']);
 const form = reactive({ password: '', confirmPassword: '' });
-const steps = ['시작', '정보 입력', '인증', '추가 설정', '완료'];
 </script>
 
 <template>
@@ -34,9 +39,9 @@ const steps = ['시작', '정보 입력', '인증', '추가 설정', '완료'];
     </main>
 
     <StepNavigation
-        :progress="80"
-        :currentIdx="3"
-        :labels="steps"
+        :progress="progress"
+        :currentIdx="currentIdx"
+        :labels="labels"
         :disabledNext="!form.password || form.password !== form.confirmPassword"
         @next="emit('next')"
         @prev="emit('prev')"

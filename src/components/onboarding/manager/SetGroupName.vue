@@ -2,9 +2,14 @@
 import { ref } from 'vue';
 import StepNavigation from '../common/StepNavigation.vue';
 
+const props = defineProps({
+  labels: Array,
+  currentIdx: Number,
+  progress: Number
+});
+
 const emit = defineEmits(['next', 'prev']);
 const groupName = ref('');
-const steps = ['시작', '단체명 설정', '가입방식 설정', '계정정보 기입', '완료'];
 </script>
 
 <template>
@@ -17,7 +22,7 @@ const steps = ['시작', '단체명 설정', '가입방식 설정', '계정정�
               type="text"
               v-model="groupName"
               class="name-input"
-              placeholder="ex) 본인의 회사 또는 단체 이름"
+              placeholder="ex) 회사, 학교, 병원 등"
               @keyup.enter="groupName && emit('next')"
           />
         </div>
@@ -25,9 +30,9 @@ const steps = ['시작', '단체명 설정', '가입방식 설정', '계정정�
     </main>
 
     <StepNavigation
-        :progress="40"
-        :currentIdx="1"
-        :labels="steps"
+        :progress="progress"
+        :currentIdx="currentIdx"
+        :labels="labels"
         :disabledNext="!groupName"
         @next="emit('next')"
         @prev="emit('prev')"

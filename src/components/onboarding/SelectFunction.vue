@@ -1,12 +1,10 @@
 <script setup>
-import StepNavigation from './common/StepNavigation.vue';
-
 const props = defineProps(['selectedType']);
-const emit = defineEmits(['next', 'prev', 'update:selectedType']);
-const steps = ['시작', '정보 입력', '인증', '추가 설정', '완료'];
+const emit = defineEmits(['next', 'update:selectedType']);
 
 const handleSelect = (type) => {
   emit('update:selectedType', type);
+  emit('next');
 };
 </script>
 
@@ -34,14 +32,6 @@ const handleSelect = (type) => {
         </div>
       </div>
     </main>
-
-    <StepNavigation
-        :progress="20"
-        :currentIdx="0"
-        :labels="steps"
-        @next="emit('next')"
-        @prev="emit('prev')"
-    />
   </div>
 </template>
 

@@ -2,9 +2,14 @@
 import { ref } from 'vue';
 import StepNavigation from '../common/StepNavigation.vue';
 
+const props = defineProps({
+  labels: Array,
+  currentIdx: Number,
+  progress: Number
+});
+
 const emit = defineEmits(['next', 'prev']);
 const searchQuery = ref('');
-const steps = ['시작', '정보 입력', '인증', '추가 설정', '완료'];
 </script>
 
 <template>
@@ -25,9 +30,9 @@ const steps = ['시작', '정보 입력', '인증', '추가 설정', '완료'];
     </main>
 
     <StepNavigation
-        :progress="40"
-        :currentIdx="1"
-        :labels="steps"
+        :progress="progress"
+        :currentIdx="currentIdx"
+        :labels="labels"
         :disabledNext="!searchQuery"
         @next="emit('next')"
         @prev="emit('prev')"

@@ -15,7 +15,7 @@ export function useOnboarding() {
     };
 
     const currentStep = ref(STEPS.ENTRY);
-    const selectedType = ref('new');
+    const selectedType = ref(null);
     const selectedJoinMethod = ref('auto');
     const groupJoinType = ref('auto');
 

@@ -2,11 +2,16 @@
 import { ref, computed } from 'vue';
 import StepNavigation from '../common/StepNavigation.vue';
 
-const props = defineProps(['groupJoinType']);
+const props = defineProps({
+  groupJoinType: String,
+  labels: Array,
+  currentIdx: Number,
+  progress: Number
+});
+
 const emit = defineEmits(['next', 'prev']);
 
 const email = ref('');
-const steps = ['시작', '정보 입력', '인증', '추가 설정', '완료'];
 
 const title = computed(() => {
   return props.groupJoinType === 'manual'
@@ -33,12 +38,12 @@ const title = computed(() => {
     </main>
 
     <StepNavigation
-        :progress="60"
-        :currentIdx="1"
-        :labels="steps"
+        :progress="progress"
+        :currentIdx="currentIdx"
+        :labels="labels"
         :disabledNext="!email"
         @next="emit('next')"
-        @prev="prev"
+        @prev="emit('prev')"
     />
   </div>
 </template>

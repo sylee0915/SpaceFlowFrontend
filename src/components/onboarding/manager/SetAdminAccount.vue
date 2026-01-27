@@ -2,9 +2,14 @@
 import { reactive } from 'vue';
 import StepNavigation from '../common/StepNavigation.vue';
 
+const props = defineProps({
+  labels: Array,
+  currentIdx: Number,
+  progress: Number
+});
+
 const emit = defineEmits(['next', 'prev']);
 const form = reactive({ email: '', password: '', confirmPassword: '' });
-const steps = ['시작', '단체명 설정', '가입방식 설정', '계정정보 기입', '완료'];
 </script>
 
 <template>
@@ -18,11 +23,7 @@ const steps = ['시작', '단체명 설정', '가입방식 설정', '계정정�
             <div class="email-input-group">
               <input type="text" v-model="form.email" placeholder="이메일 입력" />
               <span>@</span>
-              <select>
-                <option>직접입력</option>
-                <option>gmail.com</option>
-                <option>naver.com</option>
-              </select>
+              <select><option>직접입력</option></select>
             </div>
           </div>
           <div class="form-row">
@@ -38,9 +39,9 @@ const steps = ['시작', '단체명 설정', '가입방식 설정', '계정정�
     </main>
 
     <StepNavigation
-        :progress="90"
-        :currentIdx="3"
-        :labels="steps"
+        :progress="progress"
+        :currentIdx="currentIdx"
+        :labels="labels"
         :disabledNext="!form.email || !form.password || form.password !== form.confirmPassword"
         @next="emit('next')"
         @prev="emit('prev')"

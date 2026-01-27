@@ -12,6 +12,9 @@
             v-model:joinMethod="selectedJoinMethod"
             :groupJoinType="groupJoinType"
             :userName="userName"
+            :labels="currentLabels"
+            :currentIdx="currentStepInfo.idx"
+            :progress="currentStepInfo.progress"
             @next="next"
             @prev="prev"
         />
@@ -49,6 +52,42 @@ const {
 
 const userName = ref('이승엽');
 
+const managerLabels = ['시작', '단체명 설정', '가입방식 설정', '계정정보 기입', '완료'];
+const memberLabels = ['시작', '이메일 입력', '이메일 인증', '정보 입력', '완료'];
+
+const currentLabels = computed(() => {
+  return selectedType.value === 'new' ? managerLabels : memberLabels;
+});
+
+const currentStepInfo = computed(() => {
+  const s = STEPS;
+  const step = currentStep.value;
+  const isManager = selectedType.value === 'new';
+
+  if (isManager) {
+    switch (step) {
+      case s.GROUP_NAME: return { idx: 1, progress: 40 };
+      case s.JOIN_METHOD: return { idx: 2, progress: 60 };
+      case s.SET_DOMAIN: return { idx: 3, progress: 75 };
+      case s.SET_ADMIN: return { idx: 3, progress: 85 };
+      case s.VERIFY_EMAIL: return { idx: 3, progress: 90 };
+      case s.SET_USER_NAME: return { idx: 3, progress: 95 };
+      case s.DONE: return { idx: 4, progress: 100 };
+      default: return { idx: 0, progress: 20 };
+    }
+  } else {
+    switch (step) {
+      case s.SEARCH_GROUP: return { idx: 1, progress: 40 };
+      case s.SET_MEMBER_EMAIL: return { idx: 1, progress: 50 };
+      case s.VERIFY_EMAIL: return { idx: 2, progress: 70 };
+      case s.SET_MEMBER_PASSWORD: return { idx: 3, progress: 85 };
+      case s.SET_USER_NAME: return { idx: 3, progress: 95 };
+      case s.DONE: return { idx: 4, progress: 100 };
+      default: return { idx: 0, progress: 20 };
+    }
+  }
+});
+
 const currentComponent = computed(() => {
   switch (currentStep.value) {
     case STEPS.ENTRY: return EntryScreen;
@@ -58,7 +97,8 @@ const currentComponent = computed(() => {
     case STEPS.SET_DOMAIN: return SetDomain;
     case STEPS.SEARCH_GROUP: return SearchGroup;
     case STEPS.SET_ADMIN: return SetAdminAccount;
-      // 멤버용 이메일/비밀번호 입력 단계는 별도 컴포넌트 사용
+    case STEPS.SET_MEMBER_EMAIL: return SetMemberEmail;
+    case STEPS.SET_MEMBER_PASSWORD: return SetMemberPassword;
     case STEPS.VERIFY_EMAIL: return VerifyEmail;
     case STEPS.SET_USER_NAME: return SetUserName;
     case STEPS.DONE: return OnboardingDone;
