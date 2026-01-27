@@ -122,7 +122,6 @@ const handleSelect = (method) => {
   transition: all 0.25s;
 }
 
-/* 활성화 상태 스타일 */
 .method-card.active .card-tab {
   background-color: #1A1A1A;
 }

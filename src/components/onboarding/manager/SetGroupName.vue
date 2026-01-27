@@ -17,7 +17,7 @@ const steps = ['시작', '단체명 설정', '가입방식 설정', '계정정�
               type="text"
               v-model="groupName"
               class="name-input"
-              placeholder="ex) 회사, 학교, 병원 등"
+              placeholder="ex) 본인의 회사 또는 단체 이름"
               @keyup.enter="groupName && emit('next')"
           />
         </div>
@@ -36,9 +36,46 @@ const steps = ['시작', '단체명 설정', '가입방식 설정', '계정정�
 </template>
 
 <style scoped>
-.step-wrapper { height: 100%; display: flex; flex-direction: column; font-family: 'Pretendard', sans-serif; }
-.main-content { flex: 1; display: flex; align-items: center; justify-content: center; }
-.center-content { width: 100%; max-width: 600px; text-align: center; }
-.main-title { font-size: 34px; font-weight: 700; margin-bottom: 56px; }
-.name-input { width: 100%; border: 2px solid #1A1A1A; padding: 24px; border-radius: 20px; font-size: 17px; text-align: center; outline: none; }
+.step-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Pretendard', sans-serif;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.center-content {
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+}
+
+.main-title {
+  font-size: 34px;
+  font-weight: 700;
+  margin-bottom: 56px;
+}
+
+.name-input {
+  width: 100%;
+  background-color: transparent;
+  border: 2px solid #1A1A1A;
+  padding: 24px;
+  border-radius: 20px;
+  font-size: 18px;
+  text-align: center;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.name-input:focus {
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
 </style>

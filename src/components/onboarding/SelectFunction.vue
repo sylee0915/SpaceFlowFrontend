@@ -46,11 +46,38 @@ const handleSelect = (type) => {
 </template>
 
 <style scoped>
-.step-wrapper { height: 100%; display: flex; flex-direction: column; }
-.main-content { flex: 1; display: flex; align-items: center; justify-content: center; }
-.center-content { width: 100%; max-width: 520px; text-align: center; }
-.main-title { font-size: 34px; font-weight: 700; margin-bottom: 56px; letter-spacing: -0.02em; }
-.selection-group { display: flex; flex-direction: column; gap: 14px; }
+.step-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.center-content {
+  width: 100%;
+  max-width: 520px;
+  text-align: center;
+}
+
+.main-title {
+  font-size: 34px;
+  font-weight: 700;
+  margin-bottom: 56px;
+  letter-spacing: -0.02em;
+}
+
+.selection-group {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
 .selection-card {
   background-color: rgba(255, 255, 255, 0.5);
   border: 2px solid rgba(26, 26, 26, 0.1);
@@ -62,11 +89,13 @@ const handleSelect = (type) => {
   transition: all 0.3s ease;
   text-align: left;
 }
+
 .selection-card:hover {
   border-color: rgba(26, 26, 26, 0.3);
   background-color: rgba(255, 255, 255, 0.8);
   transform: translateX(4px);
 }
+
 .selection-card.active {
   background-color: #1A1A1A;
   color: #FFFFFF;

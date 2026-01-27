@@ -38,8 +38,6 @@ const handleLogin = () => {
 </template>
 
 <style scoped>
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
-
 .entry-wrapper {
   height: 100%;
   display: flex;

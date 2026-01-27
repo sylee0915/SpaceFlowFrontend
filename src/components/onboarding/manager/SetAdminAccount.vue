@@ -18,7 +18,11 @@ const steps = ['시작', '단체명 설정', '가입방식 설정', '계정정�
             <div class="email-input-group">
               <input type="text" v-model="form.email" placeholder="이메일 입력" />
               <span>@</span>
-              <select><option>직접입력</option></select>
+              <select>
+                <option>직접입력</option>
+                <option>gmail.com</option>
+                <option>naver.com</option>
+              </select>
             </div>
           </div>
           <div class="form-row">
@@ -37,6 +41,7 @@ const steps = ['시작', '단체명 설정', '가입방식 설정', '계정정�
         :progress="90"
         :currentIdx="3"
         :labels="steps"
+        :disabledNext="!form.email || !form.password || form.password !== form.confirmPassword"
         @next="emit('next')"
         @prev="emit('prev')"
     />
@@ -44,13 +49,68 @@ const steps = ['시작', '단체명 설정', '가입방식 설정', '계정정�
 </template>
 
 <style scoped>
-.step-wrapper { height: 100%; display: flex; flex-direction: column; font-family: 'Pretendard', sans-serif; }
-.main-content { flex: 1; display: flex; align-items: center; justify-content: center; }
-.center-content { width: 100%; max-width: 500px; }
-.main-title { font-size: 32px; font-weight: 700; margin-bottom: 48px; text-align: center; }
-.form-container { display: flex; flex-direction: column; gap: 24px; }
-.form-row { display: flex; flex-direction: column; gap: 8px; }
-.form-row label { font-size: 14px; font-weight: 600; color: #4A4A4A; }
-.form-row input, .form-row select { padding: 16px; border-radius: 12px; border: 1px solid #DDD; background: rgba(255,255,255,0.5); font-size: 15px; }
-.email-input-group { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: center; }
+.step-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Pretendard', sans-serif;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.center-content {
+  width: 100%;
+  max-width: 500px;
+}
+
+.main-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 48px;
+  text-align: center;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-row label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #4A4A4A;
+}
+
+.form-row input, .form-row select {
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid #DDD;
+  background: rgba(255, 255, 255, 0.5);
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-row input:focus {
+  border-color: #1A1A1A;
+}
+
+.email-input-group {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  align-items: center;
+}
 </style>

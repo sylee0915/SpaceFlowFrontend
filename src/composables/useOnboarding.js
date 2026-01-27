@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 
 export function useOnboarding() {
     const STEPS = {
@@ -17,6 +17,7 @@ export function useOnboarding() {
     const currentStep = ref(STEPS.ENTRY);
     const selectedType = ref('new');
     const selectedJoinMethod = ref('auto');
+    const groupJoinType = ref('auto');
 
     const next = () => {
         const s = STEPS;
@@ -34,8 +35,11 @@ export function useOnboarding() {
         else if (cur === s.JOIN_METHOD) {
             currentStep.value = selectedJoinMethod.value === 'auto' ? s.SET_DOMAIN : s.SET_ADMIN;
         }
-        else if (cur === s.SET_DOMAIN || cur === s.SEARCH_GROUP) {
+        else if (cur === s.SET_DOMAIN) {
             currentStep.value = s.SET_ADMIN;
+        }
+        else if (cur === s.SEARCH_GROUP) {
+            currentStep.value = s.VERIFY_EMAIL;
         }
         else if (cur === s.SET_ADMIN) {
             currentStep.value = s.VERIFY_EMAIL;
@@ -54,12 +58,14 @@ export function useOnboarding() {
 
         if (cur === s.DONE) currentStep.value = s.SET_USER_NAME;
         else if (cur === s.SET_USER_NAME) currentStep.value = s.VERIFY_EMAIL;
-        else if (cur === s.VERIFY_EMAIL) currentStep.value = s.SET_ADMIN;
+        else if (cur === s.VERIFY_EMAIL) {
+            currentStep.value = selectedType.value === 'new' ? s.SET_ADMIN : s.SEARCH_GROUP;
+        }
         else if (cur === s.SET_ADMIN) {
-            if (selectedType.value === 'join') {
-                currentStep.value = s.SEARCH_GROUP;
-            } else {
+            if (selectedType.value === 'new') {
                 currentStep.value = selectedJoinMethod.value === 'auto' ? s.SET_DOMAIN : s.JOIN_METHOD;
+            } else {
+                currentStep.value = s.SEARCH_GROUP;
             }
         }
         else if (cur === s.SET_DOMAIN) currentStep.value = s.JOIN_METHOD;
@@ -74,6 +80,7 @@ export function useOnboarding() {
         STEPS,
         selectedType,
         selectedJoinMethod,
+        groupJoinType,
         next,
         prev
     };
