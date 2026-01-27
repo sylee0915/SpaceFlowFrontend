@@ -1,5 +1,5 @@
 <script setup>
-import StepNavigation from './common/StepNavigation.vue';
+import StepNavigation from '../common/StepNavigation.vue';
 
 const props = defineProps(['selectedType']);
 const emit = defineEmits(['next', 'prev', 'update:selectedType']);

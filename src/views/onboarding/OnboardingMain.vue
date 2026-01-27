@@ -22,7 +22,7 @@
             title="사용하실 이름을 입력해 주세요."
             placeholder="이름 입력"
             :progress="95"
-            :currentIdx="3"
+            :currentIdx="selectedType === 'new' ? 3 : 4"
             v-model="userName"
             @next="next"
             @prev="prev"
@@ -32,6 +32,7 @@
             v-else
             :is="components[currentStep]"
             v-model:joinMethod="selectedJoinMethod"
+            v-model:selectedType="selectedType"
             @next="next"
             @prev="prev"
         />
@@ -45,6 +46,7 @@ import { ref, computed } from 'vue';
 import { useOnboarding } from '@/composables/useOnboarding';
 import EntryScreen from '@/components/onboarding/EntryScreen.vue';
 import SelectFunction from '@/components/onboarding/SelectFunction.vue';
+import SearchGroup from "@/components/onboarding/member/SearchGroup.vue";
 import SetGroupName from "@/components/onboarding/manager/SetGroupName.vue";
 import SetJoinMethod from "@/components/onboarding/manager/SetJoinMethod.vue";
 import SetAdminAccount from "@/components/onboarding/manager/SetAdminAccount.vue";
@@ -52,20 +54,28 @@ import VerifyEmail from "@/components/onboarding/shared/VerifyEmail.vue";
 import OnboardingDone from "@/components/onboarding/shared/OnboardingDone.vue";
 import SimpleInputStep from "@/components/onboarding/common/SimpleInputStep.vue";
 
-const { currentStep, STEPS, selectedJoinMethod, next, prev } = useOnboarding();
+const {
+  currentStep,
+  STEPS,
+  selectedType,
+  selectedJoinMethod,
+  next,
+  prev
+} = useOnboarding();
 
 const domain = ref('');
 const userName = ref('');
 
-const components = {
+const components = computed(() => ({
   [STEPS.ENTRY]: EntryScreen,
   [STEPS.SELECT]: SelectFunction,
+  [STEPS.SEARCH_GROUP]: SearchGroup,
   [STEPS.GROUP_NAME]: SetGroupName,
   [STEPS.JOIN_METHOD]: SetJoinMethod,
   [STEPS.SET_ADMIN]: SetAdminAccount,
   [STEPS.VERIFY_EMAIL]: VerifyEmail,
   [STEPS.DONE]: OnboardingDone
-};
+}));
 
 const logoUrl = 'https://i.ibb.co/KjdC2qnn/KakaoTalk-20260125-164433710.png';
 </script>
@@ -78,7 +88,6 @@ const logoUrl = 'https://i.ibb.co/KjdC2qnn/KakaoTalk-20260125-164433710.png';
   position: relative;
   overflow: hidden;
 }
-
 .global-header {
   padding: 48px 64px;
   position: absolute;
@@ -86,22 +95,18 @@ const logoUrl = 'https://i.ibb.co/KjdC2qnn/KakaoTalk-20260125-164433710.png';
   left: 0;
   z-index: 100;
 }
-
 .logo-img {
   height: 44px;
   width: auto;
 }
-
 .step-content {
   height: 100vh;
   width: 100%;
 }
-
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease;
 }
-
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
