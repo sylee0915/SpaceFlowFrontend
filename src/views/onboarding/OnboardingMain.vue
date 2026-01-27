@@ -66,24 +66,24 @@ const currentStepInfo = computed(() => {
 
   if (isManager) {
     switch (step) {
-      case s.GROUP_NAME: return { idx: 1, progress: 40 };
-      case s.JOIN_METHOD: return { idx: 2, progress: 60 };
-      case s.SET_DOMAIN: return { idx: 3, progress: 75 };
-      case s.SET_ADMIN: return { idx: 3, progress: 85 };
-      case s.VERIFY_EMAIL: return { idx: 3, progress: 90 };
-      case s.SET_USER_NAME: return { idx: 3, progress: 95 };
+      case s.GROUP_NAME: return { idx: 0, progress: 0 };
+      case s.JOIN_METHOD: return { idx: 1, progress: 25 };
+      case s.SET_DOMAIN: return { idx: 2, progress: 50 };
+      case s.SET_ADMIN: return { idx: 3, progress: 75 };
+      case s.VERIFY_EMAIL: return { idx: 3, progress: 75 };
+      case s.SET_USER_NAME: return { idx: 3, progress: 75 };
       case s.DONE: return { idx: 4, progress: 100 };
-      default: return { idx: 0, progress: 20 };
+      default: return { idx: 0, progress: 0 };
     }
   } else {
     switch (step) {
-      case s.SEARCH_GROUP: return { idx: 1, progress: 40 };
-      case s.SET_MEMBER_EMAIL: return { idx: 1, progress: 50 };
-      case s.VERIFY_EMAIL: return { idx: 2, progress: 70 };
-      case s.SET_MEMBER_PASSWORD: return { idx: 3, progress: 85 };
-      case s.SET_USER_NAME: return { idx: 3, progress: 95 };
+      case s.SEARCH_GROUP: return { idx: 0, progress: 0 };
+      case s.SET_MEMBER_EMAIL: return { idx: 1, progress: 25 };
+      case s.VERIFY_EMAIL: return { idx: 2, progress: 50 };
+      case s.SET_MEMBER_PASSWORD: return { idx: 3, progress: 75 };
+      case s.SET_USER_NAME: return { idx: 3, progress: 75 };
       case s.DONE: return { idx: 4, progress: 100 };
-      default: return { idx: 0, progress: 20 };
+      default: return { idx: 0, progress: 0 };
     }
   }
 });

@@ -32,7 +32,6 @@ const handleLoginGo = () => {
       <div class="center-content">
         <div v-if="!isManual" class="welcome-section">
           <h1 class="main-title">{{ userName }}님 환영합니다!</h1>
-          <p class="sub-message">가입 절차가 모두 완료되었습니다.<br/>지금 바로 서비스를 시작해보세요.</p>
           <button class="btn-login-go" @click="handleLoginGo">로그인 하러가기</button>
         </div>
 
