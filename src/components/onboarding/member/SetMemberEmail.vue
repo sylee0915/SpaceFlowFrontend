@@ -1,36 +1,44 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import StepNavigation from '../common/StepNavigation.vue';
 
+const props = defineProps(['groupJoinType']);
 const emit = defineEmits(['next', 'prev']);
-const searchQuery = ref('');
+
+const email = ref('');
 const steps = ['시작', '정보 입력', '인증', '추가 설정', '완료'];
+
+const title = computed(() => {
+  return props.groupJoinType === 'manual'
+      ? '관리자의 승인 후 가입이 완료되는 공간입니다.<br/>사용하실 이메일을 입력해 주세요.'
+      : '참여하실 공간에서 사용하는 이메일을 입력해 주세요.';
+});
 </script>
 
 <template>
   <div class="step-wrapper">
     <main class="main-content">
       <div class="center-content">
-        <h1 class="main-title">참여하실 공간의 이름을 입력해 주세요.</h1>
+        <h1 class="main-title" v-html="title"></h1>
         <div class="input-container">
           <input
-              type="text"
-              v-model="searchQuery"
+              type="email"
+              v-model="email"
               class="name-input"
-              placeholder="공간 이름 검색"
-              @keyup.enter="searchQuery && emit('next')"
+              placeholder="example@email.com"
+              @keyup.enter="email && emit('next')"
           />
         </div>
       </div>
     </main>
 
     <StepNavigation
-        :progress="40"
+        :progress="60"
         :currentIdx="1"
         :labels="steps"
-        :disabledNext="!searchQuery"
+        :disabledNext="!email"
         @next="emit('next')"
-        @prev="emit('prev')"
+        @prev="prev"
     />
   </div>
 </template>
@@ -57,10 +65,12 @@ const steps = ['시작', '정보 입력', '인증', '추가 설정', '완료'];
 }
 
 .main-title {
-  font-size: 34px;
+  font-size: 30px;
   font-weight: 700;
   margin-bottom: 56px;
+  line-height: 1.4;
   letter-spacing: -0.02em;
+  word-break: keep-all;
 }
 
 .name-input {
@@ -78,9 +88,5 @@ const steps = ['시작', '정보 입력', '인증', '추가 설정', '완료'];
 .name-input:focus {
   background-color: rgba(255, 255, 255, 0.5);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
-}
-
-.name-input::placeholder {
-  color: rgba(26, 26, 26, 0.3);
 }
 </style>
