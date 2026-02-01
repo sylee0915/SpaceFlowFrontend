@@ -1,15 +1,14 @@
 <script setup>
-import { ref } from 'vue';
+import { useOnboarding } from '@/composables/useOnboarding';
 import StepNavigation from '../common/StepNavigation.vue';
+
+const { formData, next, prev } = useOnboarding();
 
 const props = defineProps({
   labels: Array,
   currentIdx: Number,
   progress: Number
 });
-
-const emit = defineEmits(['next', 'prev']);
-const userName = ref('');
 </script>
 
 <template>
@@ -20,10 +19,10 @@ const userName = ref('');
         <div class="input-container">
           <input
               type="text"
-              v-model="userName"
+              v-model="formData.userName"
               class="name-input"
               placeholder="이름 입력"
-              @keyup.enter="userName && emit('next')"
+              @keyup.enter="formData.userName && next()"
           />
         </div>
       </div>
@@ -33,9 +32,9 @@ const userName = ref('');
         :progress="progress"
         :currentIdx="currentIdx"
         :labels="labels"
-        :disabledNext="!userName"
-        @next="emit('next')"
-        @prev="emit('prev')"
+        :disabledNext="!formData.userName"
+        @next="next"
+        @prev="prev"
     />
   </div>
 </template>

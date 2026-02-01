@@ -1,15 +1,14 @@
 <script setup>
-import { reactive } from 'vue';
+import { useOnboarding } from '@/composables/useOnboarding';
 import StepNavigation from '../common/StepNavigation.vue';
+
+const { formData, next, prev } = useOnboarding();
 
 const props = defineProps({
   labels: Array,
   currentIdx: Number,
   progress: Number
 });
-
-const emit = defineEmits(['next', 'prev']);
-const form = reactive({ password: '', confirmPassword: '' });
 </script>
 
 <template>
@@ -22,7 +21,7 @@ const form = reactive({ password: '', confirmPassword: '' });
             <label>비밀번호</label>
             <input
                 type="password"
-                v-model="form.password"
+                v-model="formData.memberPassword"
                 placeholder="영문, 숫자 포함 8자리 이상"
             />
           </div>
@@ -30,7 +29,7 @@ const form = reactive({ password: '', confirmPassword: '' });
             <label>비밀번호 확인</label>
             <input
                 type="password"
-                v-model="form.confirmPassword"
+                v-model="formData.memberConfirmPassword"
                 placeholder="비밀번호를 한 번 더 입력해 주세요"
             />
           </div>
@@ -42,9 +41,9 @@ const form = reactive({ password: '', confirmPassword: '' });
         :progress="progress"
         :currentIdx="currentIdx"
         :labels="labels"
-        :disabledNext="!form.password || form.password !== form.confirmPassword"
-        @next="emit('next')"
-        @prev="emit('prev')"
+        :disabledNext="!formData.memberPassword || formData.memberPassword !== formData.memberConfirmPassword"
+        @next="next"
+        @prev="prev"
     />
   </div>
 </template>

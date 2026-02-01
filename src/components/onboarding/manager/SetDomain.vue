@@ -1,15 +1,14 @@
 <script setup>
-import { ref } from 'vue';
+import { useOnboarding } from '@/composables/useOnboarding';
 import StepNavigation from '../common/StepNavigation.vue';
+
+const { formData, next, prev } = useOnboarding();
 
 const props = defineProps({
   labels: Array,
   currentIdx: Number,
   progress: Number
 });
-
-const emit = defineEmits(['next', 'prev']);
-const domain = ref('');
 </script>
 
 <template>
@@ -20,10 +19,10 @@ const domain = ref('');
         <div class="input-container">
           <input
               type="text"
-              v-model="domain"
+              v-model="formData.domain"
               class="name-input"
               placeholder="ex) @company.com"
-              @keyup.enter="domain && emit('next')"
+              @keyup.enter="formData.domain && next()"
           />
         </div>
       </div>
@@ -33,9 +32,9 @@ const domain = ref('');
         :progress="progress"
         :currentIdx="currentIdx"
         :labels="labels"
-        :disabledNext="!domain"
-        @next="emit('next')"
-        @prev="emit('prev')"
+        :disabledNext="!formData.domain"
+        @next="next"
+        @prev="prev"
     />
   </div>
 </template>

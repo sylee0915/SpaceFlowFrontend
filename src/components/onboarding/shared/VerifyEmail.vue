@@ -1,6 +1,9 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { useOnboarding } from '@/composables/useOnboarding';
 import StepNavigation from '../common/StepNavigation.vue';
+
+const { formData, next, prev } = useOnboarding();
 
 const props = defineProps({
   labels: Array,
@@ -8,7 +11,6 @@ const props = defineProps({
   progress: Number
 });
 
-const emit = defineEmits(['next', 'prev']);
 const code = ref(['', '', '', '', '', '']);
 const inputs = ref([]);
 
@@ -27,6 +29,10 @@ const handleKeyDown = (e, index) => {
 };
 
 const isComplete = () => code.value.every(v => v !== '');
+
+watch(code, (newCode) => {
+  formData.verifyCode = newCode.join('');
+}, { deep: true });
 </script>
 
 <template>
@@ -55,8 +61,8 @@ const isComplete = () => code.value.every(v => v !== '');
         :currentIdx="currentIdx"
         :labels="labels"
         :disabledNext="!isComplete()"
-        @next="emit('next')"
-        @prev="emit('prev')"
+        @next="next"
+        @prev="prev"
     />
   </div>
 </template>

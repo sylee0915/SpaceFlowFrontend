@@ -1,15 +1,14 @@
 <script setup>
-import { ref } from 'vue';
+import { useOnboarding } from '@/composables/useOnboarding';
 import StepNavigation from '../common/StepNavigation.vue';
+
+const { formData, next, prev } = useOnboarding();
 
 const props = defineProps({
   labels: Array,
   currentIdx: Number,
   progress: Number
 });
-
-const emit = defineEmits(['next', 'prev']);
-const searchQuery = ref('');
 </script>
 
 <template>
@@ -20,10 +19,10 @@ const searchQuery = ref('');
         <div class="input-container">
           <input
               type="text"
-              v-model="searchQuery"
+              v-model="formData.searchQuery"
               class="name-input"
               placeholder="공간 이름 검색"
-              @keyup.enter="searchQuery && emit('next')"
+              @keyup.enter="formData.searchQuery && next()"
           />
         </div>
       </div>
@@ -33,9 +32,9 @@ const searchQuery = ref('');
         :progress="progress"
         :currentIdx="currentIdx"
         :labels="labels"
-        :disabledNext="!searchQuery"
-        @next="emit('next')"
-        @prev="emit('prev')"
+        :disabledNext="!formData.searchQuery"
+        @next="next"
+        @prev="prev"
     />
   </div>
 </template>

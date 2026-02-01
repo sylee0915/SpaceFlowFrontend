@@ -1,10 +1,11 @@
 <script setup>
-const props = defineProps(['selectedType']);
-const emit = defineEmits(['next', 'update:selectedType']);
+import { useOnboarding } from '@/composables/useOnboarding';
+
+const { selectedType, next } = useOnboarding();
 
 const handleSelect = (type) => {
-  emit('update:selectedType', type);
-  emit('next');
+  selectedType.value = type;
+  next();
 };
 </script>
 

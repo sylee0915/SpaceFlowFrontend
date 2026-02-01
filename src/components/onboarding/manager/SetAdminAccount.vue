@@ -1,15 +1,14 @@
 <script setup>
-import { reactive } from 'vue';
+import { useOnboarding } from '@/composables/useOnboarding';
 import StepNavigation from '../common/StepNavigation.vue';
+
+const { formData, next, prev } = useOnboarding();
 
 const props = defineProps({
   labels: Array,
   currentIdx: Number,
   progress: Number
 });
-
-const emit = defineEmits(['next', 'prev']);
-const form = reactive({ email: '', password: '', confirmPassword: '' });
 </script>
 
 <template>
@@ -21,18 +20,30 @@ const form = reactive({ email: '', password: '', confirmPassword: '' });
           <div class="form-row">
             <label>이메일 주소 (ID)</label>
             <div class="email-input-group">
-              <input type="text" v-model="form.email" placeholder="이메일 입력" />
+              <input
+                  type="text"
+                  v-model="formData.adminEmail"
+                  placeholder="이메일 입력"
+              />
               <span>@</span>
               <select><option>직접입력</option></select>
             </div>
           </div>
           <div class="form-row">
             <label>비밀번호</label>
-            <input type="password" v-model="form.password" placeholder="영문, 숫자 포함 8자리 이상" />
+            <input
+                type="password"
+                v-model="formData.adminPassword"
+                placeholder="영문, 숫자 포함 8자리 이상"
+            />
           </div>
           <div class="form-row">
             <label>비밀번호 확인</label>
-            <input type="password" v-model="form.confirmPassword" placeholder="비밀번호를 한 번 더 입력해 주세요" />
+            <input
+                type="password"
+                v-model="formData.adminConfirmPassword"
+                placeholder="비밀번호를 한 번 더 입력해 주세요"
+            />
           </div>
         </div>
       </div>
@@ -42,9 +53,9 @@ const form = reactive({ email: '', password: '', confirmPassword: '' });
         :progress="progress"
         :currentIdx="currentIdx"
         :labels="labels"
-        :disabledNext="!form.email || !form.password || form.password !== form.confirmPassword"
-        @next="emit('next')"
-        @prev="emit('prev')"
+        :disabledNext="!formData.adminEmail || !formData.adminPassword || formData.adminPassword !== formData.adminConfirmPassword"
+        @next="next"
+        @prev="prev"
     />
   </div>
 </template>

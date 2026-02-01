@@ -1,20 +1,18 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
+import { useOnboarding } from '@/composables/useOnboarding';
 import StepNavigation from '../common/StepNavigation.vue';
 
+const { formData, next, prev } = useOnboarding();
+
 const props = defineProps({
-  groupJoinType: String,
   labels: Array,
   currentIdx: Number,
   progress: Number
 });
 
-const emit = defineEmits(['next', 'prev']);
-
-const email = ref('');
-
 const title = computed(() => {
-  return props.groupJoinType === 'manual'
+  return formData.joinMethod === 'manual'
       ? '관리자의 승인 후 가입이 완료되는 공간입니다.<br/>사용하실 이메일을 입력해 주세요.'
       : '참여하실 공간에서 사용하는 이메일을 입력해 주세요.';
 });
@@ -28,10 +26,10 @@ const title = computed(() => {
         <div class="input-container">
           <input
               type="email"
-              v-model="email"
+              v-model="formData.memberEmail"
               class="name-input"
               placeholder="example@email.com"
-              @keyup.enter="email && emit('next')"
+              @keyup.enter="formData.memberEmail && next()"
           />
         </div>
       </div>
@@ -41,9 +39,9 @@ const title = computed(() => {
         :progress="progress"
         :currentIdx="currentIdx"
         :labels="labels"
-        :disabledNext="!email"
-        @next="emit('next')"
-        @prev="emit('prev')"
+        :disabledNext="!formData.memberEmail"
+        @next="next"
+        @prev="prev"
     />
   </div>
 </template>

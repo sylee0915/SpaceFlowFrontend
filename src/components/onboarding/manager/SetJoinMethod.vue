@@ -1,17 +1,17 @@
 <script setup>
+import { useOnboarding } from '@/composables/useOnboarding';
 import StepNavigation from '../common/StepNavigation.vue';
 
+const { formData, next, prev } = useOnboarding();
+
 const props = defineProps({
-  joinMethod: String,
   labels: Array,
   currentIdx: Number,
   progress: Number
 });
 
-const emit = defineEmits(['next', 'prev', 'update:joinMethod']);
-
 const handleSelect = (method) => {
-  emit('update:joinMethod', method);
+  formData.joinMethod = method;
 };
 </script>
 
@@ -24,7 +24,7 @@ const handleSelect = (method) => {
         <div class="method-group">
           <div
               class="method-card"
-              :class="{ active: joinMethod === 'auto' }"
+              :class="{ active: formData.joinMethod === 'auto' }"
               @click="handleSelect('auto')"
           >
             <div class="card-tab">도메인 자동 승인</div>
@@ -35,7 +35,7 @@ const handleSelect = (method) => {
 
           <div
               class="method-card"
-              :class="{ active: joinMethod === 'manual' }"
+              :class="{ active: formData.joinMethod === 'manual' }"
               @click="handleSelect('manual')"
           >
             <div class="card-tab">관리자 직접 승인</div>
@@ -51,8 +51,8 @@ const handleSelect = (method) => {
         :progress="progress"
         :currentIdx="currentIdx"
         :labels="labels"
-        @next="emit('next')"
-        @prev="emit('prev')"
+        @next="next"
+        @prev="prev"
     />
   </div>
 </template>

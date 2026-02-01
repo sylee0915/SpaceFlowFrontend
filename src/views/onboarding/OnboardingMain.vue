@@ -8,10 +8,6 @@
       <transition name="fade" mode="out-in">
         <component
             :is="currentComponent"
-            v-model:selectedType="selectedType"
-            v-model:joinMethod="selectedJoinMethod"
-            :groupJoinType="groupJoinType"
-            :userName="userName"
             :labels="currentLabels"
             :currentIdx="currentStepInfo.idx"
             :progress="currentStepInfo.progress"
@@ -24,7 +20,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import { useOnboarding } from '@/composables/useOnboarding';
 
 import EntryScreen from '@/components/onboarding/EntryScreen.vue';
@@ -44,13 +40,10 @@ const {
   currentStep,
   STEPS,
   selectedType,
-  selectedJoinMethod,
-  groupJoinType,
+  formData,
   next,
   prev
 } = useOnboarding();
-
-const userName = ref('이승엽');
 
 const managerLabels = ['시작', '단체명 설정', '가입방식 설정', '계정정보 기입', '완료'];
 const memberLabels = ['시작', '이메일 입력', '이메일 인증', '정보 입력', '완료'];
@@ -66,22 +59,22 @@ const currentStepInfo = computed(() => {
 
   if (isManager) {
     switch (step) {
-      case s.GROUP_NAME: return { idx: 0, progress: 0 };
-      case s.JOIN_METHOD: return { idx: 1, progress: 25 };
-      case s.SET_DOMAIN: return { idx: 2, progress: 50 };
-      case s.SET_ADMIN: return { idx: 3, progress: 75 };
-      case s.VERIFY_EMAIL: return { idx: 3, progress: 75 };
-      case s.SET_USER_NAME: return { idx: 3, progress: 75 };
+      case s.GROUP_NAME: return { idx: 1, progress: 20 };
+      case s.JOIN_METHOD: return { idx: 2, progress: 40 };
+      case s.SET_DOMAIN: return { idx: 3, progress: 60 };
+      case s.SET_ADMIN: return { idx: 3, progress: 60 };
+      case s.VERIFY_EMAIL: return { idx: 3, progress: 80 };
+      case s.SET_USER_NAME: return { idx: 3, progress: 80 };
       case s.DONE: return { idx: 4, progress: 100 };
       default: return { idx: 0, progress: 0 };
     }
   } else {
     switch (step) {
-      case s.SEARCH_GROUP: return { idx: 0, progress: 0 };
-      case s.SET_MEMBER_EMAIL: return { idx: 1, progress: 25 };
-      case s.VERIFY_EMAIL: return { idx: 2, progress: 50 };
-      case s.SET_MEMBER_PASSWORD: return { idx: 3, progress: 75 };
-      case s.SET_USER_NAME: return { idx: 3, progress: 75 };
+      case s.SEARCH_GROUP: return { idx: 1, progress: 20 };
+      case s.SET_MEMBER_EMAIL: return { idx: 2, progress: 40 };
+      case s.VERIFY_EMAIL: return { idx: 3, progress: 60 };
+      case s.SET_MEMBER_PASSWORD: return { idx: 3, progress: 80 };
+      case s.SET_USER_NAME: return { idx: 3, progress: 80 };
       case s.DONE: return { idx: 4, progress: 100 };
       default: return { idx: 0, progress: 0 };
     }
